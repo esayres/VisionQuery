@@ -20,3 +20,10 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+
+__pycache__/
+datasets/
+data/images/animalDataSet/
+data/images/cityScapeDataSet/
+data/images/fruitDataSet/
+data/embeddings-old.pkl
