@@ -53,7 +53,10 @@ print(f"seen_files: {len(seen_files)} total photos tracked.")
 #print(f"{seen_files}")
 
 # this needs to use the embedding code to compute the embeddings for the new files and add them to the saved embeddings
-
+#    print("Computing embeddings... this may take a while.")
+#    embeddings = encode_images(IMAGE_FOLDER, model)
+#    save_embeddings(embeddings, EMBED_PATH)
+#    print("Computed and saved embeddings.")
 
 # STEP 2: Listen for new files and update seenFiles in real-time (this is after startup, it will keep running and listen for new files)
 
