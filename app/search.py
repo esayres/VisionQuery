@@ -1,4 +1,4 @@
-import torch # type: ignore
+import torch
 import subprocess
 import shutil
 import sys
@@ -28,12 +28,14 @@ def open_in_gwenview(results):
 
 def search(query, model, embeddings, top_k=20):
     # Turn the text query into an embedding/vector so it can be compared against the image embeddings.
-    query_embedding = model.encode_text(query)
+    query_embedding = model.encode_text(query).squeeze(0)
+    device = query_embedding.device
     results = []
 
     # Compare the query embedding to every saved image embedding.
     for path, image_embedding in embeddings:
-        score = torch.matmul(query_embedding, image_embedding.T).item() # Compute similarity score between the text query and this image.
+        image_embedding = image_embedding.to(device).squeeze(0)# make sure the image embedding is on the same device as the query embedding (GPU or CPU) for fast computation
+        score = torch.dot(query_embedding, image_embedding).item() # Compute similarity score between the text query and this image.
         results.append((path, score)) # Save both the path and its score so we can sort later.
 
     # Sort results from highest score to lowest score.

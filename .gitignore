@@ -21,9 +21,15 @@ rad.json
 #Test results file
 TestResults.xml
 
+# python
 __pycache__/
+
+# testing
 datasets/
-data/images/animalDataSet/
-data/images/cityScapeDataSet/
-data/images/fruitDataSet/
+
+# data related files
+data/images/
 data/embeddings-old.pkl
+data/embeddings.pkl
+data/
+data/directories.txt

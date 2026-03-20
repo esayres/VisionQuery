@@ -2,3 +2,5 @@ torch
 torchvision
 transformers
 pillow
+keyring
+watchdog
