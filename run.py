@@ -7,17 +7,13 @@ from app.search import search, open_in_gwenview
 IMAGE_FOLDER = "data/images"
 
 
-model = CLIPWrapper()
+model = CLIPWrapper() # takes alot of ram when you have alot of photos (300k photos was roughly 7-8gb of ram for embeddings)
 
 # Step 1: compute embeddings (run once)
-#if os.path.exists(EMBED_PATH): # not perfect what if we add new images?
-#else: # now this doesnt need to save ever, listener will do the saving, this just needs to search for the img
-#    print("Computing embeddings... this may take a while.")
-#    embeddings = encode_images(IMAGE_FOLDER, model)
-#    save_embeddings(embeddings, EMBED_PATH)
-#    print("Computed and saved embeddings.")
 
-# Step 2: query loop
+# Step 2: query loop 
+# LETS ADD A TIME OUT FEATURE HERE, SO IF THE USER DOESNT ENTER A QUERY FOR A WHILE (5-10 mins), IT EXITS THE PROGRAM
+# IF USER SENTS A QUERY THEN IT RESETS THE TIMER
 while True:
     query = input("Enter search query: ")
     results = search(query, model) # in search it justs to just load the embeddings from disk, it doesnt need to take them as an argument.

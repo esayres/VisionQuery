@@ -24,18 +24,22 @@ import base64
 class EncryptionManager:
     def __init__(self, file_name):
         self.file_name = file_name
+        self.file_extension = ".enc"
         self.service_name = "VisionQuery"
         self.key_name = "master_key"
         SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-        self.encrypted_file = os.path.join(SCRIPT_DIR, "..", "data", file_name)
+        self.encrypted_file = os.path.join(SCRIPT_DIR, "..", "data", f"{self.file_name}") # missing the extension here
         self.encrypted_file = os.path.normpath(self.encrypted_file)  # encrypted file on disk
+        self.chunk_size = 5000 # number of embedding to store per file to avoid overflow errors
+        #self.file_contents = {} # start with empty set if loading fails
         
         self.aesgcm = self.get_encryption_key()
         try:
             self.file_contents = self.load_file_contents() #
-            print(f"encrypted {self.file_name} loaded successfully.")
+            #print(self.file_contents)
+            print(f"encrypted {self.file_name}{self.file_extension} loaded successfully.")
         except Exception as e:
-            print(f"Error loading {self.file_name} files, starting with empty dictionary. Error:", e)
+            print(f"Error loading {self.file_name}{self.file_extension} files, starting with empty dictionary. Error:", e)
             self.file_contents = {} # start with empty set if loading fails
 
     # --------------------------
@@ -79,22 +83,50 @@ class EncryptionManager:
     # --------------------------
     # 3. Load or initialize seen files
     # --------------------------
-    def load_file_contents(self):
-        if os.path.exists(self.encrypted_file):
-            with open(self.encrypted_file, "r") as f:
-                file_contents = self.decrypt_json(f.read())
-        else:
-            file_contents = {}  # use hash as key (we dont need to hash)
+    def load_file_contents(self):  # this runs somehow when the model is init?
+        file_contents = []
+        print(f"{self.encrypted_file}_chunk_0{self.file_extension}")
+        for i in range(0, 100000): # just a random large number to prevent infinite loop, it will break when it cant find the next chunk file
+            chunk_file = f"{self.encrypted_file}_chunk_{i}{self.file_extension}"
+            if os.path.exists(chunk_file):
+                with open(chunk_file, "r") as f:
+                    chunk_contents = self.decrypt_json(f.read())
+                    file_contents.extend(chunk_contents)
+            else:
+                if i == 0: # no chunks
+                    print("no Chucks FIle Found")
+                    break  # no more chunk files, exit loop
+                print(f"ended at chunk {i - 1} file")
+                break
+        self.file_contents = file_contents
         return file_contents
+
+
+      # if os.path.exists(self.encrypted_file):
+     #       with open(self.encrypted_file, "r") as f:
+      #          file_contents = self.decrypt_json(f.read())
+     #   else:
+     #       file_contents = {}  # use hash as key (we dont need to hash)
+     #   return file_contents
 
     # --------------------------
     # 5. Save encrypted seenFiles.json
     # --------------------------
     def save_file_contents(self):
-        with open(self.encrypted_file, "w") as f:
-            f.write(self.encrypt_json(self.file_contents))
+        #try:
+        #    items = list(self.file_contents.items())
+        #except AttributeError:
+        #    items = list(self.file_contents)
+        for chunk_index, i in enumerate(range(0, len(self.file_contents), self.chunk_size)):
+            chunk = self.file_contents[i:i + self.chunk_size]
+            print(f"Saving chunk {i // self.chunk_size} of {self.file_name}{self.file_extension}...")
+            
 
-        print(f"Encrypted {self.file_name} saved.")
+
+            with open(f"{self.encrypted_file}_chunk_{chunk_index}{self.file_extension}", "w") as f: # this needs to save to multiple files
+                f.write(self.encrypt_json(chunk))
+
+        print(f"Encrypted {self.file_name}_chunk_{chunk_index}{self.file_extension} saved.")
 
     # --------------------------
     # 4. Example: add a file

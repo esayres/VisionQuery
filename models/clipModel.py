@@ -1,6 +1,6 @@
 # loading in the clip model here
-from transformers import CLIPProcessor, CLIPModel  # type: ignore
-import torch  # type: ignore
+from transformers import CLIPProcessor, CLIPModel
+import torch 
 
 print("Loading CLIP model...")
 
