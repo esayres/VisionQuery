@@ -33,6 +33,7 @@ new_files = []
 print(f"Reading directories to scan from {DIRECTORIES_FILE}...")
 with open(DIRECTORIES_FILE) as f: 
     directories = [line.strip() for line in f]
+directories.append("../data/images")
 
 # Scan all directories
 for directory in directories:

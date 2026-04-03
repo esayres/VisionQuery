@@ -18,6 +18,17 @@ visionquery/
 ```
 **Nested folders are supported, for example:**
 
+**Or**
+
+**List dicrectories on your computer in text file:**
+```bash
+visionquery/
+│
+├── data/
+│   ├── directories.txt          
+```
+**Program will recursively go through all files in given directory and find images**
+
 ```bash
 visionquery/
 │
@@ -27,6 +38,7 @@ visionquery/
 ```  
 **Then Run:**
 
+    python app/listener.py
     python run.py
 ## Features
 
@@ -34,6 +46,7 @@ visionquery/
 - Uses CLIP for zero-shot image-text matching
 - Recursively scans images in nested folders
 - Precomputes and saves image embeddings for faster reuse
+- encrypts the image embedding data & paths
 - Ranks results by similarity score
 - Clean modular architecture for scaling later
 
@@ -62,7 +75,11 @@ Because CLIP embeds text and images into the same shared space, VisionQuery can 
 
 4. **Pillow**
 
-5. **CLIP (Contrastive Language–Image Pretraining)**
+5. **Keyring**
+
+6. **Watchdog**
+
+7. **CLIP (Contrastive Language–Image Pretraining)**
 
 ## How To Install
     git clone https://github.com/yourusername/visionquery.git
@@ -70,7 +87,7 @@ Because CLIP embeds text and images into the same shared space, VisionQuery can 
     pip install -r requirements.txt
 
 ## Or install manually:
-    pip install torch torchvision transformers pillow
+    pip install torch torchvision transformers pillow keyring watchdog
 
 
 ## Project Structure
@@ -83,6 +100,8 @@ visionquery/
 │
 ├── app/
 │   ├── embeddings.py       # Generates, saves, and loads image embeddings
+    ├── encryption.py       # Encrypts image paths and data, (optional but prevents image data from being in plain text)
+    ├── listener.py         # On start, works in background to save embeddings
 │   └── search.py           # Performs similarity search over embeddings
 │
 ├── data/
@@ -93,3 +112,11 @@ visionquery/
 ├── requirements.txt        # Project dependencies
 └── README.md               # Project documentation
 ```
+
+## Future Features/Changes
+
+1. **Improving RAM/GPU usage for large amount of images (currently all embeddings are loaded in RAM)**
+
+2. **Refactoring code**
+
+3. **Looking into improving accuracy even further**

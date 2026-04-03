@@ -28,8 +28,4 @@ __pycache__/
 datasets/
 
 # data related files
-data/images/
-data/embeddings-old.pkl
-data/embeddings.pkl
 data/
-data/directories.txt
