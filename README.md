@@ -36,7 +36,7 @@ visionquery/
 ```
 **For Example:**
 ```bash
-visionquery
+visionquery/
 │
 ├── data/directories.txt
 │   ├── /run/media/Name/MainDrive/photos/
