@@ -96,7 +96,7 @@ Because CLIP embeds text and images into the same shared space, VisionQuery can 
     pip install -r requirements.txt
 
 ## Or install manually:
-    pip install torch torchvision transformers pillow keyring watchdog
+    pip install torch torchvision transformers pillow keyring watchdog cryptography
 
 
 ## Project Structure
