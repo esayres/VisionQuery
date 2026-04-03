@@ -17,18 +17,6 @@ visionquery/
 │   ├── images/          
 ```
 **Nested folders are supported, for example:**
-
-**Or**
-
-**List dicrectories on your computer in text file:**
-```bash
-visionquery/
-│
-├── data/
-│   ├── directories.txt          
-```
-**Program will recursively go through all files in given directory and find images**
-
 ```bash
 visionquery/
 │
@@ -36,6 +24,27 @@ visionquery/
 │   ├── data/images/dataset1/dog1.jpg
 │   ├── data/images/dataset2/fruits/apple.png         
 ```  
+
+**Or**
+
+**List dicrectories on your computer in text file (line by line):**
+```bash
+visionquery/
+│
+├── data/
+│   ├── directories.txt          
+```
+**For Example:**
+```bash
+visionquery
+│
+├── data/directories.txt
+│   ├── /run/media/Name/MainDrive/photos/
+│   ├── /home/userName/  
+``` 
+
+**Program will recursively go through all files in given directory and find images**
+
 **Then Run:**
 
     python app/listener.py
