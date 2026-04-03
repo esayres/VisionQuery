@@ -126,7 +126,7 @@ class EncryptionManager:
             with open(f"{self.encrypted_file}_chunk_{chunk_index}{self.file_extension}", "w") as f: # this needs to save to multiple files
                 f.write(self.encrypt_json(chunk))
 
-        print(f"Encrypted {self.file_name}_chunk_{chunk_index}{self.file_extension} saved.")
+            print(f"Encrypted {self.file_name}_chunk_{chunk_index}{self.file_extension} saved.")
 
     # --------------------------
     # 4. Example: add a file

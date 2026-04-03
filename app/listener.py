@@ -12,6 +12,8 @@ import os
 # Get the folder this script lives in
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DIRECTORIES_FILE = os.path.join(SCRIPT_DIR, "..", "data", "directories.txt")
+IMAGES_DIR = os.path.join(SCRIPT_DIR, "..", "data", "images")
+print(f"IMAGES DIR: {IMAGES_DIR}")
 DIRECTORIES_FILE = os.path.normpath(DIRECTORIES_FILE)  # a file where you can tell it which directories to scan for photos, one per line
 
 DATA_FILE = "seenFiles" # encrypted file on disk
@@ -33,7 +35,7 @@ new_files = []
 print(f"Reading directories to scan from {DIRECTORIES_FILE}...")
 with open(DIRECTORIES_FILE) as f: 
     directories = [line.strip() for line in f]
-directories.append("../data/images")
+directories.append(IMAGES_DIR)
 
 # Scan all directories
 for directory in directories:

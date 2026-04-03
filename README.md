@@ -129,3 +129,5 @@ visionquery/
 2. **Refactoring code**
 
 3. **Looking into improving accuracy even further**
+
+4. **Improve speed of encoding embeddings (possibly Multi-Threading)**
