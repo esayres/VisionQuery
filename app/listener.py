@@ -2,7 +2,7 @@
 # it needs to do one big embedding of all data
 from encryption import EncryptionManager
 from watchdog.events import FileSystemEventHandler
-from embedding import encode_images_paths, load_embeddings
+from embedding import encode_images_paths
 from watchdog.observers import Observer
 import json
 import time
@@ -64,8 +64,8 @@ print(f"seen_files: {len(seen_files)} total photos tracked.")
 #    print("Computed and saved embeddings.")
 #
 print("Computing embeddings for new photos... this may take a while.")
-SavedEmbeddings = load_embeddings()
-encode_images_paths(SavedEmbeddings, new_files) # this will compute the embeddings for the new files and save them to disk (encrypted) as well as update the seen_files with the new paths
+#SavedEmbeddings = load_embeddings()
+encode_images_paths(new_files) # this will compute the embeddings for the new files and save them to disk (encrypted) as well as update the seen_files with the new paths
 print("finished computing")
 # STEP 2: Listen for new files and update seenFiles in real-time (this is after startup, it will keep running and listen for new files)
 watchDog_NewFiles = []
@@ -89,8 +89,8 @@ class PhotoHandler(FileSystemEventHandler):
 
 
                 print("Computing embeddings for new photos detected by watchdog... this may take a while.")
-                SavedEmbeddings = load_embeddings()
-                encode_images_paths(SavedEmbeddings, watchDog_NewFiles) # this will compute the embeddings for the new files and save them to disk (encrypted) as well as update the seen_files with the new paths
+                #SavedEmbeddings = load_embeddings()
+                encode_images_paths(watchDog_NewFiles)  # this will compute the embeddings for the new files and save them to disk (encrypted) as well as update the seen_files with the new paths
                 print("finished computing")
                 watchDog_NewFiles.clear() # clear the list after processing
 
